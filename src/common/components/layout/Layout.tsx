@@ -4,13 +4,15 @@ import styled from 'styled-components';
 import Header from '../header/Header';
 import Sidebar from '../sidebar/Sidebar';
 
-const StyledBody = styled.div``;
+const StyledBody = styled.div`
+
+`;
 
 const Layout: FC<{children: React.ReactNode | null}> = ({children = <></>}) => {
   return (
     <>
       <Header></Header>
-      <Sidebar></Sidebar>
+      {/* <Sidebar></Sidebar> */}
       <StyledBody>{children}</StyledBody>
     </>
   );

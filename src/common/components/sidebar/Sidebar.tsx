@@ -63,6 +63,7 @@ const Sidebar: FC = () => {
   const optionList = ['내 광고', '내 광고2'];
   return (
     <SidebarWrapper>
+      여기
       {optionList.map((v, i) => (
         <SidebarOption key={i} active={active === i ? true : false} onClick={() => setActive(i)}>
           <h3>{v}</h3>

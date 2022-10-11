@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Layout from './common/components/layout/Layout';
-import Home from './pages/home';
+import Login from './pages/login';
 
 const App: FC = () => {
 
@@ -12,7 +12,7 @@ const App: FC = () => {
     <>
       <div className="App">
         <Layout>
-          <Home />
+          <Login />
         </Layout>
       </div>
     </>
