@@ -2,19 +2,33 @@ import styled, {css} from 'styled-components';
 import backImg from '../../test.png';
 
 const Wrapper = styled.div`
+  // background-color: #03C75A;
   // background-color: #8bd298;
   // background-color: #B6EDB6;
-  background-image: url(${backImg})
+  // background-image: url(${backImg})
+  background: linear-gradient( 180deg, rgba(147,212,148,1) 0%, rgba(120,191,173,1) 100%);
+  min-width: 280px;
 `;
 const AlignCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
+const limitSize = css`
+  max-width: 260px;
+  min-width: 170px;
+`
 const Logo = styled.div`
   padding: 20px;
   height: 300px;
   ${AlignCenter}
+
+  &:first-child > img {
+    width: 50%;
+    ${limitSize}
+}
+  }
 `;
 
 const LoginDiv = styled.div`
@@ -38,20 +52,26 @@ const LoginInput = styled.input`
   box-shadow: none;
   padding: 14px 17px 13px;
   box-sizing: border-box;
+  width: 45%;
+  ${limitSize}
 `;
 
 const LoginNaver = styled.a`
   width: 205px;
   padding: 15px 0;
   margin-top: 11px;
-  background-color: #19ce60;
+  // color: #fff;
+  // background-color: #19ce60;
+  color: #03C75A;
+  background-color: #fff;
   border: 1px solid #15c654;
   border-radius: 6px;
   font-size: 13px;
-  color: #fff;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
+  width: 45%;
+  ${limitSize}
 `;
 
 const Login = () => {
