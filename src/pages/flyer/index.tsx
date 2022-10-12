@@ -34,7 +34,7 @@ const UserName = styled.h4`
   margin-top: 15px;
 `;
 
-const UserEmail = styled.h6`
+const UserPoint = styled.h6`
   font-weight: 600;
   font-size: 15px;
   line-height: 1;
@@ -50,9 +50,23 @@ const MenuWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
-const Menu = styled.div``;
+const Menu = styled.div`
+  width: 100%;
+  border-top: 2px solid #696969;
+  font-size: 19px;
+  color: #000000;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  padding: 20px;
+  margin: 0.2px;
+  &:last-child {
+    border-bottom: 2px solid #696969;
+  }
+`;
 
 const Flyer = () => {
   return (
@@ -62,11 +76,14 @@ const Flyer = () => {
           <ProfileImg src={userImg} />
           <UserInfo>
             <UserName>name</UserName>
-            <UserEmail>email</UserEmail>
+            <UserPoint>150 point</UserPoint>
           </UserInfo>
         </Profile>
         <MenuWrapper>
-          <Menu>dd</Menu>
+          <Menu>포인트 사용</Menu>
+          <Menu>포인트 내역</Menu>
+          <Menu>로그아웃</Menu>
+          <Menu>회원탈퇴</Menu>
         </MenuWrapper>
       </Wrapper>
     </>
