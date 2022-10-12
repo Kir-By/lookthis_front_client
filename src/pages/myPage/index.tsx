@@ -68,7 +68,7 @@ const Menu = styled.div`
   }
 `;
 
-const Flyer = () => {
+const MyPage = () => {
   return (
     <>
       <Wrapper>
@@ -90,4 +90,4 @@ const Flyer = () => {
   );
 };
 
-export default Flyer;
+export default MyPage;
