@@ -1,5 +1,11 @@
+import {useCallback, useRef, useState} from 'react';
+import {Lock, Unlock, XCircle} from 'react-feather';
 import styled, {css} from 'styled-components';
 import userImg from '../../../src/googleUser.png';
+
+type PropType = {
+  isGoalIn: boolean;
+};
 
 const Wrapper = styled.div`
   min-height: 500px;
@@ -10,81 +16,67 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Profile = styled.div`
-  min-height: 200px;
+const ImgWrapper = styled.img``;
+
+const Ball = styled.div`
+  & svg {
+    width: 50px;
+    height: 50px;
+  }
 `;
 
-const ProfileImg = styled.img`
-  width: 100px;
-  height: 100px;
+const Target = styled.div`
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  border: 7px solid #19ce60;
   border-radius: 50%;
-  margin-right: 6px;
-  overflow: hidden;
-`;
-
-const UserInfo = styled.div`
-  flex-direction: column;
-`;
-
-const UserName = styled.h4`
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: rgba(0, 0, 0, 0.87);
-  margin-top: 15px;
-`;
-
-const UserPoint = styled.h6`
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: rgba(0, 0, 0, 0.87);
-  margin-top: -20px;
-`;
-
-const MenuWrapper = styled.div`
-  background-color: #a0a0a0
-  min-height: 500px;
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-`;
-
-const Menu = styled.div`
-  width: 100%;
-  border-top: 2px solid #696969;
-  font-size: 19px;
-  color: #000000;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-  padding: 20px;
-  margin: 0.2px;
-  &:last-child {
-    border-bottom: 2px solid #696969;
+  align-items: center;
+  background-color: ${(props: PropType) => (props.isGoalIn ? '#19ce60' : null)};
+  & svg {
   }
 `;
 
 const Flyer = () => {
+  const [isGoalIn, setIsGoalIn] = useState(false);
+  const [isInside, setIsInside] = useState(false);
+  const ballRef = useRef<HTMLDivElement | null>(null);
+
+  const onDragStart = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      setIsInside(true);
+      console.log('drag');
+    },
+    [isInside],
+  );
+
+  const onDragEnd = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      setIsGoalIn(true);
+      console.log('drop');
+    },
+    [isGoalIn],
+  );
+
   return (
     <>
       <Wrapper>
-        <Profile>
-          <ProfileImg src={userImg} />
-          <UserInfo>
-            <UserName>name</UserName>
-            <UserPoint>150 point</UserPoint>
-          </UserInfo>
-        </Profile>
-        <MenuWrapper>
-          <Menu>포인트 사용</Menu>
-          <Menu>포인트 내역</Menu>
-          <Menu>로그아웃</Menu>
-          <Menu>회원탈퇴</Menu>
-        </MenuWrapper>
+        <ImgWrapper src={userImg} />
+        <Ball draggable ref={ballRef}>
+          <XCircle />
+        </Ball>
+        <Target
+          isGoalIn={isGoalIn}
+          onDragOver={e => onDragStart(e)}
+          onDragLeave={() => setIsInside(false)}
+          onDrop={e => onDragEnd(e)}
+        >
+          {isInside ? <Unlock /> : <Lock />}
+        </Target>
       </Wrapper>
     </>
   );
