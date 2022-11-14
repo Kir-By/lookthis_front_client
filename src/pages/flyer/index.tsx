@@ -1,9 +1,13 @@
 import {useDrag} from '@use-gesture/react';
-import {MutableRefObject, useCallback, useRef, useState} from 'react';
+import {useCallback, useRef, useState, useEffect} from 'react';
+import {useQueryClient} from 'react-query';
 import {Lock, Unlock, XCircle} from 'react-feather';
+import {useQuery} from 'react-query';
 import styled, {css} from 'styled-components';
 import mobileFlyer from '../../../src/mobile-flyer.jpg';
 import mobileFlyer2 from '../../../src/mobile-flyer2.jpg';
+import {getFlyerList} from '../../common/apis/flyer';
+import useGeolocation from '../../common/hooks/location/useGeolocation';
 import {device} from '../../common/style/layout/device';
 
 type MovePropType = {
@@ -17,6 +21,12 @@ type PositionType = {
 
 type DragPropType = {
   isGoalIn: boolean;
+};
+
+type FlyerListPropType = {
+  userId: string;
+  lat: number | undefined;
+  lng: number | undefined;
 };
 
 const Ball = styled.div`
@@ -108,6 +118,23 @@ const Wrapper = styled.div`
 `;
 
 const Flyer = () => {
+  const queryClient = useQueryClient();
+  const location = useGeolocation();
+  const locationData = location.loaded ? location : null;
+  const lat = location?.coordinates?.lat;
+  const lng = location?.coordinates?.lng;
+  // console.log('locationData', locationData);
+  // console.log('lat', lat);
+  // console.log('lng', lng);
+  const flyerListParam = {userId: 'nsw2', lat, lng};
+  const {data: flyerList} = useQuery({
+    queryKey: ['flyerList'],
+  });
+  console.log('flyerListParam', flyerListParam);
+  useEffect(() => {
+    getFlyerList();
+  }, [flyerListParam]);
+
   // move state
   const ballRef = useRef<HTMLDivElement>(null);
   const [circlePosition, setCirclePosition] = useState<PositionType>({x: 0, y: 0});
@@ -163,6 +190,7 @@ const Flyer = () => {
             {isInside ? <Unlock /> : <Lock />}
           </Target>
         </DragWrapper>
+        {location.loaded ? JSON.stringify(location) : 'Location data not available yet !'}
       </Wrapper>
     </>
   );

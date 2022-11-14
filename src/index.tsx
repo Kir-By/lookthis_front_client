@@ -3,14 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {QueryClientProvider, QueryClient} from 'react-query';
+import {ReactQueryDevtools} from 'react-query/devtools';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // ✅ turns retries off
+      retry: false,
+    },
+  },
+});
+
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
