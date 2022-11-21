@@ -1,10 +1,11 @@
 import {FC} from 'react';
 import styled from 'styled-components';
 import {Search} from 'react-feather';
+import {Link} from 'react-router-dom';
 
 const StyledHeader = styled.header`
   object-fit: contain;
-  height: 80px;
+  height: 40px;
   margin-left: 5px;
   display: flex;
   align-items: center;
@@ -65,23 +66,28 @@ const Header: FC = () => {
   return (
     <StyledHeader>
       <StyledHeaderLeft>
-        <StyledHeaderLeftSpan>menu</StyledHeaderLeftSpan>
-        <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" />
+        <StyledHeaderLeftSpan>
+          <Link to={'/flyer'}>List</Link>
+        </StyledHeaderLeftSpan>
+        <StyledHeaderLeftSpan>
+          <Link to={'/flyer/history'}>History</Link>
+        </StyledHeaderLeftSpan>
+        {/* <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" /> */}
       </StyledHeaderLeft>
 
-      <StyledHeaderMiddle>
+      {/* <StyledHeaderMiddle>
         <StyledMaterialIcons>
           <Search></Search>
         </StyledMaterialIcons>
         <StyledHeaderMiddleInput type="text" placeholder="Search mail" />
         <StyledMaterialIcons className="material-icons"> arrow_drop_down </StyledMaterialIcons>
-      </StyledHeaderMiddle>
+      </StyledHeaderMiddle> */}
 
-      <StyledHeaderRight>
+      {/* <StyledHeaderRight>
         <StyledHeaderRightSpan> apps </StyledHeaderRightSpan>
         <StyledHeaderRightSpan> notifications </StyledHeaderRightSpan>
         <StyledHeaderRightSpan> account_circle </StyledHeaderRightSpan>
-      </StyledHeaderRight>
+      </StyledHeaderRight> */}
     </StyledHeader>
   );
 };

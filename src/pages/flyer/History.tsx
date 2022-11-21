@@ -6,7 +6,7 @@ import {useQuery} from 'react-query';
 import styled, {css} from 'styled-components';
 import mobileFlyer from '../../../src/mobile-flyer.jpg';
 import mobileFlyer2 from '../../../src/mobile-flyer2.jpg';
-import {getFlyerList} from '../../common/apis/flyer';
+import {getFlyerHistoryList, getFlyerList} from '../../common/apis/flyer';
 import useGeolocation from '../../common/hooks/location/useGeolocation';
 import {device} from '../../common/style/layout/device';
 import SwiperImage from '../../common/components/swiper/SwiperImage';
@@ -38,13 +38,6 @@ type FlyerType = {
   path: string;
   status: number;
   storeId: number;
-};
-
-type insertPointAPIParamType = {
-  point: number;
-  userId: string;
-  flyerId: number;
-  spotId: number;
 };
 
 const Ball = styled.div`
@@ -79,9 +72,6 @@ const ImgWrapper = styled.img`
 
 const DragWrapper = styled.div`
   position: relative;
-  height: 100px;
-  display: flex;
-  justify-content: center;
   & ${Ball} {
     position: relative;
     width: 100%;
@@ -110,7 +100,7 @@ const Wrapper = styled.div`
     & ${DragWrapper} {
       width: 100%;
     }
-    background-color: #f4364c;
+    background-color: #19ce60;
   }
 
   @media ${device.tablet} {
@@ -122,7 +112,7 @@ const Wrapper = styled.div`
     & ${DragWrapper} {
       width: 100%;
     }
-    background-color: #19ce60;
+    background-color: #f4364c;
   }
 
   @media ${device.laptop} {
@@ -138,7 +128,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Flyer = () => {
+const History = () => {
   const queryClient = useQueryClient();
   const location = useGeolocation();
   const locationData = location.loaded ? location : null;
@@ -148,11 +138,11 @@ const Flyer = () => {
   // console.log('lat', lat);
   // console.log('lng', lng);
   const flyerListParam = JSON.stringify({userId: 'nsw2', lat: 37.504548, lng: 127.024501});
-  const {data: flyerList} = useQuery<FlyerType[] | undefined>({
+  const {data: flyerHistoryList} = useQuery<FlyerType[] | undefined>({
     queryKey: ['flyerList'],
-    queryFn: () => getFlyerList(flyerListParam),
+    queryFn: () => getFlyerHistoryList(flyerListParam),
   });
-  console.log('flyerList', flyerList);
+  console.log('flyerHistoryList', flyerHistoryList);
 
   // move state
   const ballRef = useRef<HTMLDivElement>(null);
@@ -192,47 +182,14 @@ const Flyer = () => {
     [isGoalIn],
   );
 
-  // 클릭 시 읽고 포인트 적립
-  // const onPoint = useCallback(() => {
-
-  // }, [])
-
   return (
     <>
       <Header />
       <Wrapper>
-        {/* {flyerList?.map((flyer: FlyerType) => (
-          <ImgWrapper
-            key={flyer?.flyerId}
-            src={`https://lookthis.s3.ap-northeast-2.amazonaws.com/flyer/image${flyer?.path}`}
-          />
-        ))} */}
-        <SwiperImage images={flyerList} />
-        <DragWrapper>
-          <Ball circlePosition={circlePosition} {...bindCirclePosition()} ref={ballRef}>
-            <XCircle />
-          </Ball>
-          {/* <Target
-            isGoalIn={isGoalIn}
-            onDragOver={e => onDragStart(e)}
-            onDragLeave={() => setIsInside(false)}
-            onDrop={e => onDragEnd(e)}
-          >
-            {isInside ? <Unlock /> : <Lock />}
-          </Target> */}
-          <Target
-            isGoalIn={isGoalIn}
-            onClick={() => {
-              setIsGoalIn(true), setIsInside(true);
-            }}
-          >
-            {isInside ? <Unlock /> : <Lock />}
-          </Target>
-        </DragWrapper>
-        {/* {location.loaded ? JSON.stringify(location) : 'Location data not available yet !'} */}
+        <SwiperImage images={flyerHistoryList} />
       </Wrapper>
     </>
   );
 };
 
-export default Flyer;
+export default History;

@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const useAxios = axios.create({
-  baseURL: 'http://54.180.155.48:8080',
+  // baseURL: 'http://54.180.155.48:8080',
+  baseURL: 'https://lookthis-back.nhncloud.paas-ta.com/',
   headers: {
-    'Content-type': 'application/json',
     Accept: 'application/json; charset=UTF-8',
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 export default useAxios;
