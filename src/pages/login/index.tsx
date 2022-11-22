@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   // background-color: #8bd298;
   // background-color: #B6EDB6;
   // background-image: url(${''})
-  background: linear-gradient( 180deg, rgba(147,212,148,1) 0%, rgba(120,191,173,1) 100%);
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   min-width: 280px;
 `;
 const AlignCenter = css`
@@ -18,7 +18,7 @@ const AlignCenter = css`
 const limitSize = css`
   max-width: 260px;
   min-width: 170px;
-`
+`;
 const Logo = styled.div`
   padding: 20px;
   height: 300px;
@@ -62,7 +62,7 @@ const LoginNaver = styled.a`
   margin-top: 11px;
   // color: #fff;
   // background-color: #19ce60;
-  color: #03C75A;
+  color: #03c75a;
   background-color: #fff;
   border: 1px solid #15c654;
   border-radius: 6px;
@@ -89,7 +89,7 @@ const Login = () => {
           <LoginInput alt="" placeholder="Input Password" />
           {/* <input alt="" type="color"/> */}
           <LoginNaver
-            href="https://nid.naver.com/nidlogin.login?mode=form&amp;url=https%3A%2F%2Fwww.naver.com"
+            href="http://lookthis-back.nhncloud.paas-ta.com/oauth2/authorization/naver"
             className="link_login"
             data-clk="log_off.login"
           >

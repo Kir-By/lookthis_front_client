@@ -9,8 +9,8 @@ type FlyerListPropType = {
 type insertPointAPIParamType = {
   point: number;
   userId: string;
-  flyerId: number;
-  spotId: number;
+  flyerId?: number;
+  spotId?: number;
 };
 
 export const getFlyerList = async (data: string) => {

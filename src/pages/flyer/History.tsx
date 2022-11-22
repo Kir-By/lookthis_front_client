@@ -38,6 +38,14 @@ type FlyerType = {
   path: string;
   status: number;
   storeId: number;
+  spotId: number;
+};
+
+type insertPointAPIParamType = {
+  point: number;
+  userId: string;
+  flyerId?: number;
+  spotId?: number;
 };
 
 const Ball = styled.div`
@@ -134,15 +142,22 @@ const History = () => {
   const locationData = location.loaded ? location : null;
   const lat = location?.coordinates?.lat;
   const lng = location?.coordinates?.lng;
-  console.log('locationData', locationData);
+
   // console.log('lat', lat);
   // console.log('lng', lng);
   const flyerListParam = JSON.stringify({userId: 'nsw2', lat: 37.504548, lng: 127.024501});
   const {data: flyerHistoryList} = useQuery<FlyerType[] | undefined>({
-    queryKey: ['flyerList'],
+    queryKey: ['flyerHistoryList'],
     queryFn: () => getFlyerHistoryList(flyerListParam),
   });
-  console.log('flyerHistoryList', flyerHistoryList);
+
+  // insertPoint를 위한 paramState
+  const [insertPointParamData, setInsertPointParamData] = useState<insertPointAPIParamType>({
+    point: 5,
+    userId: 'nsw2',
+    flyerId: flyerHistoryList ? flyerHistoryList[0]?.flyerId : 1,
+    spotId: flyerHistoryList ? flyerHistoryList[0]?.spotId : 1,
+  });
 
   // move state
   const ballRef = useRef<HTMLDivElement>(null);
@@ -186,7 +201,13 @@ const History = () => {
     <>
       <Header />
       <Wrapper>
-        <SwiperImage images={flyerHistoryList} />
+        <SwiperImage
+          props={{
+            images: flyerHistoryList,
+            insertPointParamData,
+            setInsertPointParamData,
+          }}
+        />
       </Wrapper>
     </>
   );
