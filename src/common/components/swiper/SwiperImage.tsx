@@ -25,12 +25,13 @@ type insertPointAPIParamType = {
 
 type SwiperImageProps = {
   images: FlyerType[] | undefined;
+  userId: string;
   insertPointParamData: insertPointAPIParamType | undefined;
   setInsertPointParamData: Dispatch<SetStateAction<insertPointAPIParamType>>;
 };
 
 const SwiperImage = ({
-  props: {images, insertPointParamData, setInsertPointParamData},
+  props: {images, userId, insertPointParamData, setInsertPointParamData},
 }: PropsWithChildren<{props: SwiperImageProps}>) => {
   const [swiperIdx, setSwiperIdx] = useState<number>(0);
 
@@ -38,7 +39,7 @@ const SwiperImage = ({
     const flyer = images?.find((flyer, i) => i === swiperIdx);
     setInsertPointParamData({
       point: 5,
-      userId: 'nsw2',
+      userId: userId,
       flyerId: flyer?.flyerId,
       spotId: flyer?.spotId,
     });

@@ -4,6 +4,7 @@ import './App.css';
 import Flyer from './pages/flyer';
 import History from './pages/flyer/History';
 import Login from './pages/login';
+import LoginRedirect from './pages/login/LoginRedirect';
 import MyPage from './pages/myPage';
 
 const App: FC = () => {
@@ -17,6 +18,7 @@ const App: FC = () => {
           <Route path="/myPage" element={<MyPage />} />
           <Route path="/flyer" element={<Flyer />} />
           <Route path="/flyer/history" element={<History />} />
+          <Route path="/oauth2/redirect/:id" element={<LoginRedirect />} />
         </Routes>
       </BrowserRouter>
     </>

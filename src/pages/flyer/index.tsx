@@ -12,6 +12,8 @@ import {device} from '../../common/style/layout/device';
 import SwiperImage from '../../common/components/swiper/SwiperImage';
 import Header from '../../common/components/header/Header';
 import useInsertPoint from '../../common/hooks/flyer/useInsertPoint';
+import {RecoilValue, useRecoilState, useRecoilValue} from 'recoil';
+import {userState} from '../../states';
 
 type MovePropType = {
   circlePosition: PositionType;
@@ -60,6 +62,11 @@ type needChangeType = {
   setIsInside: Dispatch<SetStateAction<boolean>>;
 };
 
+type User = {
+  name: string;
+  userId: string;
+};
+
 const Ball = styled.div`
   z-index: 9999px;
   position: relative;
@@ -73,15 +80,30 @@ const Ball = styled.div`
 
 const Target = styled.div`
   position: relative;
-  margin: 0 auto;
+  margin: 0 10px;
   width: 50px;
   height: 50px;
-  border: 7px solid #19ce60;
+  border: 6px solid #fff;
   border-radius: 50%;
+  background-color: ${(props: DragPropType) => (props.isGoalIn ? '#19ce60' : null)};
+
+ & > div {
   display: flex;
+  flex-direction column;
   justify-content: center;
   align-items: center;
-  background-color: ${(props: DragPropType) => (props.isGoalIn ? '#19ce60' : null)};
+ }
+
+  & > div > h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  & > div > h5 {
+    margin-top: -25px;
+  }
+
   & svg {
   }
 `;
@@ -92,9 +114,11 @@ const ImgWrapper = styled.img`
 
 const DragWrapper = styled.div`
   position: relative;
+  margin-top: 2px;
   height: 100px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   & ${Ball} {
     position: relative;
     width: 100%;
@@ -102,7 +126,7 @@ const DragWrapper = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 0 0 50px 0;
+  // padding: 0 0 50px 0;
   min-height: calc(100vh - 140px);
   max-width: 1680px;
   position: relative;
@@ -123,7 +147,7 @@ const Wrapper = styled.div`
     & ${DragWrapper} {
       width: 100%;
     }
-    background-color: #f4364c;
+    background-color: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   }
 
   @media ${device.tablet} {
@@ -158,18 +182,28 @@ const Flyer = () => {
   const lat = location?.coordinates?.lat;
   const lng = location?.coordinates?.lng;
 
-  // console.log('lat', lat);
-  // console.log('lng', lng);
-  const flyerListParam = JSON.stringify({userId: 'nsw2', lat: 37.504548, lng: 127.024501});
+  // user정보 받기
+  const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
+
+  const flyerListParam = JSON.stringify({userId: userInfo?.userId, lat: 37.504548, lng: 127.024501});
   const {data: flyerList} = useQuery<FlyerType[] | undefined>({
-    queryKey: ['flyerList'],
+    queryKey: ['flyerList', userInfo?.userId],
     queryFn: () => getFlyerList(flyerListParam),
   });
+
+  // console.log('flyerList', flyerList);
+
+  // 1~10 point 난수 생성 함수
+  const onRandomPoint = useCallback(() => {
+    return Math.floor(Math.random() * 10 + 1);
+  }, []);
+
+  const [givePoint, setGivePoint] = useState([onRandomPoint(), onRandomPoint()]);
 
   // insertPoint를 위한 paramState
   const [insertPointParamData, setInsertPointParamData] = useState<insertPointAPIParamType>({
     point: 5,
-    userId: 'nsw2',
+    userId: userInfo?.userId,
     flyerId: flyerList ? flyerList[0]?.flyerId : 1,
     spotId: flyerList ? flyerList[0]?.spotId : 1,
   });
@@ -181,6 +215,7 @@ const Flyer = () => {
   const needChangeFunc = {
     setIsGoalIn,
     setIsInside,
+    setGivePoint,
   };
 
   // insertPoint를 위한 mutation
@@ -227,13 +262,6 @@ const Flyer = () => {
     [isGoalIn],
   );
 
-  const insertPointParam = {
-    point: 5,
-    userId: 'nsw2',
-    flyerId: 2,
-    spotId: 1,
-  };
-
   return (
     <>
       <Header />
@@ -247,14 +275,15 @@ const Flyer = () => {
         <SwiperImage
           props={{
             images: flyerList,
+            userId: userInfo?.userId,
             insertPointParamData,
             setInsertPointParamData,
           }}
         />
         <DragWrapper>
-          <Ball circlePosition={circlePosition} {...bindCirclePosition()} ref={ballRef}>
+          {/* <Ball circlePosition={circlePosition} {...bindCirclePosition()} ref={ballRef}>
             <XCircle />
-          </Ball>
+          </Ball> */}
           {/* <Target
             isGoalIn={isGoalIn}
             onDragOver={e => onDragStart(e)}
@@ -263,14 +292,28 @@ const Flyer = () => {
           >
             {isInside ? <Unlock /> : <Lock />}
           </Target> */}
-          <Target
-            isGoalIn={isGoalIn}
-            onClick={() => {
-              onInsertPoint();
-            }}
-          >
-            {isInside ? <Unlock /> : <Lock />}
-          </Target>
+          {givePoint?.map((givePointNum, index) => (
+            <>
+              <Target
+                isGoalIn={isGoalIn}
+                onClick={() => {
+                  onInsertPoint();
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <h3>{givePoint[index]}</h3>
+                  <h5>points</h5>
+                </div>
+                {/* {isInside ? <Unlock /> : <Lock />} */}
+              </Target>
+            </>
+          ))}
         </DragWrapper>
         {/* {location.loaded ? JSON.stringify(location) : 'Location data not available yet !'} */}
       </Wrapper>

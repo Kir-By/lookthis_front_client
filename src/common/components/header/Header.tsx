@@ -1,16 +1,41 @@
 import {FC} from 'react';
 import styled from 'styled-components';
 import {Search} from 'react-feather';
-import {Link} from 'react-router-dom';
+import {device} from '../../../common/style/layout/device';
+import {Link, useNavigate} from 'react-router-dom';
 
 const StyledHeader = styled.header`
   object-fit: contain;
+  width: 100%;
   height: 40px;
   margin-left: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid whitesmoke;
+  margin-left: -1px;
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
+
+  @media ${device.mobile} {
+    max-width: 767px;
+    & img {
+      width: 100%;
+    }
+  }
+
+  @media ${device.tablet} {
+    max-width: 1366px;
+    & img {
+      width: 100%;
+    }
+  }
+
+  @media ${device.laptop} {
+    max-width: 1679px;
+    & img {
+      width: 100%;
+    }
+  }
 `;
 
 const StyledHeaderLeft = styled.div`
@@ -62,15 +87,35 @@ const StyledHeaderRightSpan = styled.span`
   color: gray;
 `;
 
+const HeaderButton = styled.button`
+  width: 50px;
+  height: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  & > p {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
 const Header: FC = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledHeader>
       <StyledHeaderLeft>
         <StyledHeaderLeftSpan>
-          <Link to={'/flyer'}>List</Link>
+          <HeaderButton onClick={() => navigate('/flyer')}>
+            <p>LIST</p>
+          </HeaderButton>
+          {/* <Link to={'/flyer'}>List</Link> */}
         </StyledHeaderLeftSpan>
         <StyledHeaderLeftSpan>
-          <Link to={'/flyer/history'}>History</Link>
+          <HeaderButton onClick={() => navigate('/flyer/history')}>
+            <p>HISTORY</p>
+          </HeaderButton>
         </StyledHeaderLeftSpan>
         {/* <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" /> */}
       </StyledHeaderLeft>

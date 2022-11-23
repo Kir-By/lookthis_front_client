@@ -80,10 +80,11 @@ const ImgWrapper = styled.img`
 
 const DragWrapper = styled.div`
   position: relative;
-  & ${Ball} {
-    position: relative;
-    width: 100%;
-  }
+  margin-top: 2px;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
 `;
 
 const Wrapper = styled.div`
@@ -108,7 +109,7 @@ const Wrapper = styled.div`
     & ${DragWrapper} {
       width: 100%;
     }
-    background-color: #19ce60;
+    background-color: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   }
 
   @media ${device.tablet} {
@@ -143,18 +144,21 @@ const History = () => {
   const lat = location?.coordinates?.lat;
   const lng = location?.coordinates?.lng;
 
+  // user정보 받기
+  const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
+
   // console.log('lat', lat);
   // console.log('lng', lng);
-  const flyerListParam = JSON.stringify({userId: 'nsw2', lat: 37.504548, lng: 127.024501});
+  const flyerListParam = JSON.stringify({userId: userInfo?.userId, lat: 37.504548, lng: 127.024501});
   const {data: flyerHistoryList} = useQuery<FlyerType[] | undefined>({
-    queryKey: ['flyerHistoryList'],
+    queryKey: ['flyerHistoryList', userInfo?.userId],
     queryFn: () => getFlyerHistoryList(flyerListParam),
   });
 
   // insertPoint를 위한 paramState
   const [insertPointParamData, setInsertPointParamData] = useState<insertPointAPIParamType>({
     point: 5,
-    userId: 'nsw2',
+    userId: userInfo?.userId,
     flyerId: flyerHistoryList ? flyerHistoryList[0]?.flyerId : 1,
     spotId: flyerHistoryList ? flyerHistoryList[0]?.spotId : 1,
   });
@@ -204,10 +208,12 @@ const History = () => {
         <SwiperImage
           props={{
             images: flyerHistoryList,
+            userId: userInfo?.userId,
             insertPointParamData,
             setInsertPointParamData,
           }}
         />
+        <DragWrapper></DragWrapper>
       </Wrapper>
     </>
   );

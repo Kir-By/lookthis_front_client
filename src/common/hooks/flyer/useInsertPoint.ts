@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction} from 'react';
+import {Dispatch, SetStateAction, useCallback} from 'react';
 import {useMutation, useQueryClient} from 'react-query';
 import {insertPoint} from '../../apis/flyer';
 
@@ -12,9 +12,14 @@ type insertPointAPIParamType = {
 type needChangeType = {
   setIsGoalIn: Dispatch<SetStateAction<boolean>>;
   setIsInside: Dispatch<SetStateAction<boolean>>;
+  setGivePoint: Dispatch<SetStateAction<number[]>>;
 };
 
 export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) => {
+  // 1~10 point 난수 생성 함수
+  const onRandomPoint = useCallback(() => {
+    return Math.floor(Math.random() * 10 + 1);
+  }, []);
   const queryClient = useQueryClient();
   const paramData = JSON.stringify(data);
   const insertPointMutation = useMutation({
@@ -32,6 +37,7 @@ export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) =
     onSuccess: (data, variables, context) => {
       needChangeFunc.setIsGoalIn(false);
       needChangeFunc.setIsInside(false);
+      needChangeFunc.setGivePoint([onRandomPoint(), onRandomPoint()]);
     },
     onSettled: (data, error, variables, context) => {
       queryClient.invalidateQueries(['flyerList']);
