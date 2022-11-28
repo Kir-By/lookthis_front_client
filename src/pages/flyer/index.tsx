@@ -202,7 +202,7 @@ const Flyer = () => {
 
   // insertPoint를 위한 paramState
   const [insertPointParamData, setInsertPointParamData] = useState<insertPointAPIParamType>({
-    point: 5,
+    point: 0,
     userId: userInfo?.userId,
     flyerId: flyerList ? flyerList[0]?.flyerId : 1,
     spotId: flyerList ? flyerList[0]?.spotId : 1,
@@ -222,11 +222,14 @@ const Flyer = () => {
   const insertPointMutation = useInsertPoint(insertPointParamData, needChangeFunc);
 
   // insertPoint를 위한 func
-  const onInsertPoint = useCallback(() => {
-    setIsGoalIn(true);
-    setIsInside(true);
-    insertPointMutation.mutate();
-  }, [insertPointMutation]);
+  const onInsertPoint = useCallback(
+    (point: number) => {
+      setIsGoalIn(true);
+      setIsInside(true);
+      insertPointMutation.mutate();
+    },
+    [insertPointMutation],
+  );
 
   // move state
   const ballRef = useRef<HTMLDivElement>(null);
@@ -245,10 +248,10 @@ const Flyer = () => {
   // drag & drop 이벤트
   const onDragStart = useCallback(
     (event: any) => {
-      console.log('event', event);
+      // console.log('event', event);
       event.preventDefault();
       setIsInside(true);
-      console.log('drag');
+      // console.log('drag');
     },
     [isInside],
   );
@@ -257,7 +260,7 @@ const Flyer = () => {
     (event: any) => {
       event.preventDefault();
       setIsGoalIn(true);
-      console.log('drop');
+      // console.log('drop');
     },
     [isGoalIn],
   );
@@ -296,8 +299,16 @@ const Flyer = () => {
             <>
               <Target
                 isGoalIn={isGoalIn}
+                onMouseDown={() =>
+                  setInsertPointParamData({
+                    point: givePoint[index],
+                    userId: userInfo?.userId,
+                    flyerId: flyerList ? flyerList[0]?.flyerId : 1,
+                    spotId: flyerList ? flyerList[0]?.spotId : 1,
+                  })
+                }
                 onClick={() => {
-                  onInsertPoint();
+                  onInsertPoint(givePoint[index]);
                 }}
               >
                 <div

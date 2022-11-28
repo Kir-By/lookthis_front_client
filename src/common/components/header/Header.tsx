@@ -40,7 +40,8 @@ const StyledHeader = styled.header`
 
 const StyledHeaderLeft = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  width: 767px;
 `;
 
 const StyledHeaderLeftImg = styled.img`
@@ -49,9 +50,29 @@ const StyledHeaderLeftImg = styled.img`
   margin-left: 5px;
 `;
 
-const StyledHeaderLeftSpan = styled.span`
-  padding: 10px;
+const HeaderButton = styled.button`
+  width: 50px;
+  height: 100%;
+  background: none;
+  border: none;
   cursor: pointer;
+  & > p {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
+const StyledHeaderLeftSpan = styled.span`
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  & > button {
+    display: flex;
+    justify-content: center;
+  }
+  ${HeaderButton}
 `;
 
 const StyledHeaderMiddle = styled.div`
@@ -87,19 +108,6 @@ const StyledHeaderRightSpan = styled.span`
   color: gray;
 `;
 
-const HeaderButton = styled.button`
-  width: 50px;
-  height: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  & > p {
-    color: #fff;
-    font-size: 20px;
-    font-weight: bold;
-  }
-`;
-
 const Header: FC = () => {
   const navigate = useNavigate();
 
@@ -115,6 +123,11 @@ const Header: FC = () => {
         <StyledHeaderLeftSpan>
           <HeaderButton onClick={() => navigate('/flyer/history')}>
             <p>HISTORY</p>
+          </HeaderButton>
+        </StyledHeaderLeftSpan>
+        <StyledHeaderLeftSpan>
+          <HeaderButton onClick={() => navigate('/myPage/pointInfo')}>
+            <p>POINT</p>
           </HeaderButton>
         </StyledHeaderLeftSpan>
         {/* <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" /> */}
