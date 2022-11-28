@@ -19,8 +19,8 @@ const Wrapper = styled.div`
   // background: linear-gradient(150deg, #03c75a, white);
   background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   min-width: 280px;
-  height: 737px;
-  max-height: 737px;
+  height: 837px;
+  max-height: 837px;
 `;
 const AlignCenter = css`
   display: flex;
@@ -112,7 +112,7 @@ const Login = () => {
 
   // 로그인 링크 이동 함수
   const onLoginNaver = () => {
-    window.location.href = 'http://lookthis-back.nhncloud.paas-ta.com/oauth2/authorization/naver';
+    window.location.href = 'http://lookthis-dev.nhncloud.paas-ta.com/oauth2/authorization/naver';
   };
 
   const props = {

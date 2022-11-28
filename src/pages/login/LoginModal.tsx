@@ -158,7 +158,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
         <br />
         <LoginForm>
           <LoginLabel>PASSWORD</LoginLabel>
-          <LoginInput onChange={e => onChangePasswordValue(e)} value={passwordValue}></LoginInput>
+          <LoginInput type={'password'} onChange={e => onChangePasswordValue(e)} value={passwordValue}></LoginInput>
         </LoginForm>
         <LoginButtonGroup>
           <LoginButton onClick={() => doLoginAPI()}>로그인</LoginButton>

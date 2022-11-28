@@ -33,6 +33,19 @@ const LoginRedirect = () => {
     if (decodedJWT) {
       if (isLoaded) {
         sessionStorage.setItem('user', JSON.stringify(user));
+
+        // RN에 유저 정보 송신
+        const requestPermission = () => {
+          if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({type:'LOGIN', data:{userId: user.userId}, jwt: userId}));
+          } else {
+            // 모바일이 아니라면 모바일 아님을 alert로 띄웁니다.
+            // alert({ message: ERROR_TYPES.notMobile });
+          }
+        };
+
+        requestPermission();
+
         window.location.href = '/flyer';
       } else {
         setIsLoaded(true);

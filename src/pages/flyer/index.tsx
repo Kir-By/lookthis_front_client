@@ -1,5 +1,5 @@
 import {useDrag} from '@use-gesture/react';
-import {useCallback, useRef, useState, useEffect, Dispatch, SetStateAction} from 'react';
+import {useCallback, useRef, useState, useEffect, Dispatch, SetStateAction, Fragment, useMemo} from 'react';
 import {useQueryClient} from 'react-query';
 import {Lock, Unlock, XCircle} from 'react-feather';
 import {useQuery} from 'react-query';
@@ -13,7 +13,7 @@ import SwiperImage from '../../common/components/swiper/SwiperImage';
 import Header from '../../common/components/header/Header';
 import useInsertPoint from '../../common/hooks/flyer/useInsertPoint';
 import {RecoilValue, useRecoilState, useRecoilValue} from 'recoil';
-import {userState} from '../../states';
+import {currentPosition, userState} from '../../states';
 
 type MovePropType = {
   circlePosition: PositionType;
@@ -184,10 +184,14 @@ const Flyer = () => {
 
   // user정보 받기
   const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
+  
+  const position = useRecoilValue(currentPosition);
+  const flyerListParam = useMemo(() => {
+    return JSON.stringify({userId: userInfo?.userId, lat: position.lat, lng: position.lng});
+  },[userInfo, position]);
 
-  const flyerListParam = JSON.stringify({userId: userInfo?.userId, lat: 37.504548, lng: 127.024501});
   const {data: flyerList} = useQuery<FlyerType[] | undefined>({
-    queryKey: ['flyerList', userInfo?.userId],
+    queryKey: ['flyerList', flyerListParam],
     queryFn: () => getFlyerList(flyerListParam),
   });
 
@@ -296,7 +300,7 @@ const Flyer = () => {
             {isInside ? <Unlock /> : <Lock />}
           </Target> */}
           {givePoint?.map((givePointNum, index) => (
-            <>
+            <Fragment key={index}>
               <Target
                 isGoalIn={isGoalIn}
                 onMouseDown={() =>
@@ -323,7 +327,7 @@ const Flyer = () => {
                 </div>
                 {/* {isInside ? <Unlock /> : <Lock />} */}
               </Target>
-            </>
+            </Fragment>
           ))}
         </DragWrapper>
         {/* {location.loaded ? JSON.stringify(location) : 'Location data not available yet !'} */}
