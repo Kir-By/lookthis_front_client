@@ -1,8 +1,15 @@
+import {useState, Dispatch, SetStateAction} from 'react';
 import {Link} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 import naverLogo from '../../naverLogo2.png';
 import lookthisLogo from '../../lookthisLogo3.png';
+import lookthisLogoLogin from '../../lookthisLogo.png';
+import LoginModal from './LoginModal';
 // import backImg from '../../test.png';
+
+type loginModalParamType = {
+  setOpenLoginModal: Dispatch<SetStateAction<boolean>>;
+};
 
 const Wrapper = styled.div`
   // background-color: #03C75A;
@@ -55,29 +62,61 @@ const LoginNaver = styled.button`
   letter-spacing: -0.14px;
   position: relative;
   border-color: #fff;
+  cursor: pointer;
   ${limitSize}
   ${AlignCenter}
 
-  &:first-child > img {
+  & > div > img {
     width: 45px;
     height: 45px;
     margin-left: -15px;
   }
 
-  &:last-child > p {
+  & > div > p {
     font-size: 18px;
     font-weight: 800;
     margin-left: 15px;
   }
 `;
 
+const NormalLogin = styled.button`
+  background-color: #fff;
+  width: 85vw;
+  height: 50px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  letter-spacing: -0.14px;
+  position: relative;
+  border-color: #fff;
+  cursor: pointer;
+  ${limitSize}
+  ${AlignCenter}
+
+  & > div > img {
+    height: 65px;
+    margin-left: -15px;
+  }
+
+  & > div > p {
+    font-size: 18px;
+    font-weight: 800;
+    margin-right: 15px;
+    color: rgb(39, 214, 188);
+  }
+`;
+
 const Login = () => {
-  const {data: typeData} = {data: 'test'};
-  console.log(typeData);
+  // 로그인 모달 오픈 state
+  const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
 
   // 로그인 링크 이동 함수
   const onLoginNaver = () => {
     window.location.href = 'http://lookthis-back.nhncloud.paas-ta.com/oauth2/authorization/naver';
+  };
+
+  const props = {
+    setOpenLoginModal,
   };
 
   return (
@@ -91,10 +130,19 @@ const Login = () => {
           <LoginInput alt="" placeholder="Input Password" /> */}
           {/* <input alt="" type="color"/> */}
           <LoginNaver onClick={() => onLoginNaver()}>
-            <img src={naverLogo} />
-            <p>네이버로 시작하기</p>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <img src={naverLogo} />
+              <p style={{borderColor: '#03c75a'}}>네이버로 시작하기</p>
+            </div>
           </LoginNaver>
+          <NormalLogin onClick={() => setOpenLoginModal(true)}>
+            <div style={{width: 'inherit', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <img src={lookthisLogoLogin} />
+              <p>회원 로그인</p>
+            </div>
+          </NormalLogin>
         </LoginDiv>
+        {openLoginModal && <LoginModal props={props} />}
       </Wrapper>
 
       {/* <div className="panel_inner" role="tabpanel" aria-controls="loinid">

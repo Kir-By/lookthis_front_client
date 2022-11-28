@@ -16,6 +16,7 @@ type needChangeType = {
 };
 
 export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) => {
+  const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
   // 1~10 point 난수 생성 함수
   const onRandomPoint = useCallback(() => {
     return Math.floor(Math.random() * 10 + 1);
@@ -40,7 +41,9 @@ export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) =
       needChangeFunc.setGivePoint([onRandomPoint(), onRandomPoint()]);
     },
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(['flyerList']);
+      queryClient.invalidateQueries(['flyerList', userInfo?.userId]);
+      queryClient.invalidateQueries(['pointHistoryList', userInfo?.userId]);
+      queryClient.invalidateQueries(['userInfo', userInfo?.userId]);
     },
   });
   return insertPointMutation;

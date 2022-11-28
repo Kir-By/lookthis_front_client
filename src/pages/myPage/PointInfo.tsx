@@ -193,7 +193,7 @@ const MyPage = () => {
     queryFn: () => getUser(JSON.stringify(getUserParam)),
     enabled: !!userInfo,
   });
-  // console.log('user', user);
+  console.log('user', user);
 
   // 날짜 관련
   const now = dayjs();
