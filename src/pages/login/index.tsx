@@ -112,7 +112,7 @@ const Login = () => {
 
   // 로그인 링크 이동 함수
   const onLoginNaver = () => {
-    window.location.href = 'http://lookthis-dev.nhncloud.paas-ta.com/oauth2/authorization/naver';
+    window.location.href = 'http://lookthis-back.nhncloud.paas-ta.com/oauth2/authorization/naver';
   };
 
   const props = {
