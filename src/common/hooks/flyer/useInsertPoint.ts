@@ -41,7 +41,7 @@ export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) =
       needChangeFunc.setGivePoint([onRandomPoint(), onRandomPoint()]);
     },
     onSettled: (data, error, variables, context) => {
-      queryClient.invalidateQueries(['flyerList', userInfo?.userId]);
+      queryClient.refetchQueries(['flyerList', userInfo?.userId]);
       queryClient.invalidateQueries(['pointHistoryList', userInfo?.userId]);
       queryClient.invalidateQueries(['userInfo', userInfo?.userId]);
     },
