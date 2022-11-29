@@ -184,18 +184,19 @@ const Flyer = () => {
 
   // user정보 받기
   const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
-  
+  // console.log('Flyerlist userInfo?.userId', userInfo?.userId);
+
   const position = useRecoilValue(currentPosition);
   const flyerListParam = useMemo(() => {
     return JSON.stringify({userId: userInfo?.userId, lat: position.lat, lng: position.lng});
-  },[userInfo, position]);
+  }, [userInfo, position]);
 
   const {data: flyerList} = useQuery<FlyerType[] | undefined>({
     queryKey: ['flyerList', flyerListParam],
     queryFn: () => getFlyerList(flyerListParam),
   });
 
-  // console.log('flyerList', flyerList);
+  console.log('flyerList', flyerList);
 
   // 1~10 point 난수 생성 함수
   const onRandomPoint = useCallback(() => {
@@ -223,7 +224,7 @@ const Flyer = () => {
   };
 
   // insertPoint를 위한 mutation
-  const insertPointMutation = useInsertPoint(insertPointParamData, needChangeFunc);
+  const insertPointMutation = useInsertPoint(insertPointParamData, needChangeFunc, ['flyerList', flyerListParam]);
 
   // insertPoint를 위한 func
   const onInsertPoint = useCallback(

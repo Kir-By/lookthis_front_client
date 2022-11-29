@@ -15,7 +15,7 @@ type needChangeType = {
   setGivePoint: Dispatch<SetStateAction<number[]>>;
 };
 
-export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) => {
+export default (data: insertPointAPIParamType, needChangeFunc: needChangeType, queryKey: Array<string>) => {
   const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
   // 1~10 point 난수 생성 함수
   const onRandomPoint = useCallback(() => {
@@ -36,12 +36,12 @@ export default (data: insertPointAPIParamType, needChangeFunc: needChangeType) =
       console.error(error);
     },
     onSuccess: (data, variables, context) => {
+      queryClient.refetchQueries(queryKey);
       needChangeFunc.setIsGoalIn(false);
       needChangeFunc.setIsInside(false);
       needChangeFunc.setGivePoint([onRandomPoint(), onRandomPoint()]);
     },
     onSettled: (data, error, variables, context) => {
-      queryClient.refetchQueries(['flyerList', userInfo?.userId]);
       queryClient.invalidateQueries(['pointHistoryList', userInfo?.userId]);
       queryClient.invalidateQueries(['userInfo', userInfo?.userId]);
     },
