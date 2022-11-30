@@ -205,14 +205,18 @@ const History = () => {
     <>
       <Header />
       <Wrapper>
-        <SwiperImage
-          props={{
-            images: flyerHistoryList,
-            userId: userInfo?.userId,
-            insertPointParamData,
-            setInsertPointParamData,
-          }}
-        />
+        {
+          flyerHistoryList?.length === 0 ?
+          <span style={{position:'fixed'}} >얼른 광고를 보고 포인트를 얻으세요!!</span> :
+          <SwiperImage
+            props={{
+              images: flyerHistoryList,
+              userId: userInfo?.userId,
+              insertPointParamData,
+              setInsertPointParamData,
+            }}
+          />
+        }
         <DragWrapper></DragWrapper>
       </Wrapper>
     </>
