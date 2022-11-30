@@ -116,18 +116,18 @@ const Header: FC = () => {
       <StyledHeaderLeft>
         <StyledHeaderLeftSpan>
           <HeaderButton onClick={() => navigate('/flyer')}>
-            <p>LIST</p>
+            <p style={{color: window.location.pathname === '/flyer' ? 'black' : 'white'}}>LIST</p>
           </HeaderButton>
           {/* <Link to={'/flyer'}>List</Link> */}
         </StyledHeaderLeftSpan>
         <StyledHeaderLeftSpan>
           <HeaderButton onClick={() => navigate('/flyer/history')}>
-            <p>HISTORY</p>
+            <p style={{color: window.location.pathname === '/flyer/history' ? 'black' : 'white'}}>HISTORY</p>
           </HeaderButton>
         </StyledHeaderLeftSpan>
         <StyledHeaderLeftSpan>
           <HeaderButton onClick={() => navigate('/myPage/pointInfo')}>
-            <p>POINT</p>
+            <p style={{color: window.location.pathname === '/myPage/pointInfo' ? 'black' : 'white'}}>POINT</p>
           </HeaderButton>
         </StyledHeaderLeftSpan>
         {/* <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" /> */}
