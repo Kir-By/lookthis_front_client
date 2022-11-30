@@ -177,19 +177,24 @@ const Wrapper = styled.div`
 
 const Flyer = () => {
   const queryClient = useQueryClient();
-  const location = useGeolocation();
-  const locationData = location.loaded ? location : null;
-  const lat = location?.coordinates?.lat;
-  const lng = location?.coordinates?.lng;
+  // const location = useGeolocation();
+  // const locationData = location.loaded ? location : null;
+  // const lat = location?.coordinates?.lat;
+  // const lng = location?.coordinates?.lng;
 
   // user정보 받기
   const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
   // console.log('Flyerlist userInfo?.userId', userInfo?.userId);
 
   const position = useRecoilValue(currentPosition);
+  const [positionData, setPositionData] = useState({
+    lat: position.lat,
+    lng: position.lng,
+  });
+
   const flyerListParam = useMemo(() => {
-    return JSON.stringify({userId: userInfo?.userId, lat: position.lat, lng: position.lng});
-  }, [userInfo, position]);
+    return JSON.stringify({userId: userInfo?.userId, lat: positionData.lat, lng: positionData.lng});
+  }, [userInfo]);
 
   const {data: flyerList} = useQuery<FlyerType[] | undefined>({
     queryKey: ['flyerList', flyerListParam],
@@ -224,7 +229,7 @@ const Flyer = () => {
   };
 
   // insertPoint를 위한 mutation
-  const insertPointMutation = useInsertPoint(insertPointParamData, needChangeFunc, ['flyerList', flyerListParam]);
+  const insertPointMutation = useInsertPoint(insertPointParamData, needChangeFunc, ['flyerList', flyerListParam], position, setPositionData);
 
   // insertPoint를 위한 func
   const onInsertPoint = useCallback(
@@ -305,12 +310,10 @@ const Flyer = () => {
               <Target
                 isGoalIn={isGoalIn}
                 onMouseDown={() =>
-                  setInsertPointParamData({
+                  setInsertPointParamData(prev => ({
+                    ...prev,
                     point: givePoint[index],
-                    userId: userInfo?.userId,
-                    flyerId: flyerList ? flyerList[0]?.flyerId : 1,
-                    spotId: flyerList ? flyerList[0]?.spotId : 1,
-                  })
+                  }))
                 }
                 onClick={() => {
                   onInsertPoint(givePoint[index]);

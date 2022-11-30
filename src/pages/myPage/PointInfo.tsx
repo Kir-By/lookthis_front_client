@@ -245,8 +245,8 @@ const MyPage = () => {
             </div>
           </PointTitle>
 
-          {pointHistoryList?.map(point => (
-            <React.Fragment key={point?.flyerId}>
+          {pointHistoryList?.map((point, index) => (
+            <React.Fragment key={index}>
               <Point>
                 <AlignDiv style={{padding: '0 0 0 15px'}}>
                   <PointStore>{point?.storeName}</PointStore>

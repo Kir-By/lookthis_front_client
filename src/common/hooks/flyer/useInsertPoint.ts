@@ -15,7 +15,7 @@ type needChangeType = {
   setGivePoint: Dispatch<SetStateAction<number[]>>;
 };
 
-export default (data: insertPointAPIParamType, needChangeFunc: needChangeType, queryKey: Array<string>) => {
+export default (data: insertPointAPIParamType, needChangeFunc: needChangeType, queryKey: Array<string>, positon: any, setPositionData: any) => {
   const userInfo = JSON.parse(sessionStorage.getItem('user') || '{}');
   // 1~10 point 난수 생성 함수
   const onRandomPoint = useCallback(() => {
@@ -40,6 +40,7 @@ export default (data: insertPointAPIParamType, needChangeFunc: needChangeType, q
       needChangeFunc.setIsGoalIn(false);
       needChangeFunc.setIsInside(false);
       needChangeFunc.setGivePoint([onRandomPoint(), onRandomPoint()]);
+      setPositionData({lat:positon.lat, lng: positon.lng}); // 포인트 저장 후 화면 Refresh
     },
     onSettled: (data, error, variables, context) => {
       queryClient.invalidateQueries(['pointHistoryList', userInfo?.userId]);
