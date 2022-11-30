@@ -208,6 +208,7 @@ const History = () => {
         {
           flyerHistoryList?.length === 0 ?
           <span style={{position:'fixed'}} >얼른 광고를 보고 포인트를 얻으세요!!</span> :
+          <>
           <SwiperImage
             props={{
               images: flyerHistoryList,
@@ -216,8 +217,9 @@ const History = () => {
               setInsertPointParamData,
             }}
           />
+          <DragWrapper></DragWrapper>
+          </>
         }
-        <DragWrapper></DragWrapper>
       </Wrapper>
     </>
   );
