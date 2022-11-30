@@ -293,47 +293,51 @@ const Flyer = () => {
             setInsertPointParamData,
           }}
         />
-        <DragWrapper>
-          {/* <Ball circlePosition={circlePosition} {...bindCirclePosition()} ref={ballRef}>
-            <XCircle />
-          </Ball> */}
-          {/* <Target
-            isGoalIn={isGoalIn}
-            onDragOver={e => onDragStart(e)}
-            onDragLeave={() => setIsInside(false)}
-            onDrop={e => onDragEnd(e)}
-          >
-            {isInside ? <Unlock /> : <Lock />}
-          </Target> */}
-          {givePoint?.map((givePointNum, index) => (
-            <Fragment key={index}>
-              <Target
-                isGoalIn={isGoalIn}
-                onMouseDown={() =>
-                  setInsertPointParamData(prev => ({
-                    ...prev,
-                    point: givePoint[index],
-                  }))
-                }
-                onClick={() => {
-                  onInsertPoint(givePoint[index]);
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+        {
+          flyerList?.length === 0 ?
+          <span style={{position:'fixed'}} >더 이상 광고가 없어요ㅠㅠ</span> : 
+          <DragWrapper>
+            {/* <Ball circlePosition={circlePosition} {...bindCirclePosition()} ref={ballRef}>
+              <XCircle />
+            </Ball> */}
+            {/* <Target
+              isGoalIn={isGoalIn}
+              onDragOver={e => onDragStart(e)}
+              onDragLeave={() => setIsInside(false)}
+              onDrop={e => onDragEnd(e)}
+            >
+              {isInside ? <Unlock /> : <Lock />}
+            </Target> */}
+            {givePoint?.map((givePointNum, index) => (
+              <Fragment key={index}>
+                <Target
+                  isGoalIn={isGoalIn}
+                  onMouseDown={() =>
+                    setInsertPointParamData(prev => ({
+                      ...prev,
+                      point: givePoint[index],
+                    }))
+                  }
+                  onClick={() => {
+                    onInsertPoint(givePoint[index]);
                   }}
                 >
-                  <h3>{givePoint[index]}</h3>
-                  <h5>points</h5>
-                </div>
-                {/* {isInside ? <Unlock /> : <Lock />} */}
-              </Target>
-            </Fragment>
-          ))}
-        </DragWrapper>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <h3>{givePoint[index]}</h3>
+                    <h5>points</h5>
+                  </div>
+                  {/* {isInside ? <Unlock /> : <Lock />} */}
+                </Target>
+              </Fragment>
+            ))}
+          </DragWrapper>
+        }
         {/* {location.loaded ? JSON.stringify(location) : 'Location data not available yet !'} */}
       </Wrapper>
     </>
