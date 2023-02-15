@@ -17,7 +17,7 @@ const useAxios = axios.create({
     Accept: 'application/json; charset=UTF-8',
     Authorization: 'Bearer ' + JWTToken,
   },
-  withCredentials: false,
+  withCredentials: true,
 });
 
 export default useAxios;
