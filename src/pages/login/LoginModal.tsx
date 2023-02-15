@@ -108,7 +108,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
   );
 
   // pw input value
-  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] = useState('');
   const onChangePasswordValue = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setPasswordValue(e.target.value);
@@ -122,7 +122,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    withCredentials: false,
+    withCredentials: true,
   });
 
   const doLoginAPI = useCallback(() => {
