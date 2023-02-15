@@ -118,7 +118,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
 
   // login axios setting
   const axiosCreate = axios.create({
-    baseURL: 'https://lookthis.co.kr/',
+    baseURL: 'http://lookthis.co.kr/',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
