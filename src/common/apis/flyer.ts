@@ -16,7 +16,7 @@ type insertPointAPIParamType = {
 export const getFlyerList = async (data: string) => {
   try {
     // console.log('JSON.parse(data)', JSON.parse(data));
-    const responseData = await useAxios.post('/spot/getFlyerList', JSON.parse(data)).then(response => response.data);
+    const responseData = await useAxios.get('/spot/getFlyerList', JSON.parse(data)).then(response => response.data);
     // console.log('responseData', responseData);
     return responseData;
   } catch (error) {

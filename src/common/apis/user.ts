@@ -2,7 +2,7 @@ import useAxios from '../hooks/common/useAxios';
 
 export const getUser = async (data: string) => {
   try {
-    const responseData = await useAxios.post('/user/getUser', JSON.parse(data)).then(response => response.data);
+    const responseData = await useAxios.get('/user', {JSON.parse(data)}).then(response => response.data);
     return responseData;
   } catch (error) {
     console.error(error);
@@ -12,7 +12,7 @@ export const getUser = async (data: string) => {
 export const getPointHistoryList = async (data: string) => {
   try {
     const responseData = await useAxios
-      .post('/user/getPointHistoryList', JSON.parse(data))
+      .post('/user/getPointHistoryList', {param:JSON.parse(data)})
       .then(response => response.data);
     // console.log('responseData', responseData);
     return responseData;

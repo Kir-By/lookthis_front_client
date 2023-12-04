@@ -118,7 +118,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
 
   // login axios setting
   const axiosCreate = axios.create({
-    baseURL: 'https://lookthis-back.nhncloud.paas-ta.com/',
+    baseURL: 'http://localhost:9090/',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
