@@ -112,7 +112,7 @@ const Login = () => {
 
   // 로그인 링크 이동 함수
   const onLoginNaver = () => {
-    window.location.href = 'http://localhost:9090/oauth2/authorization/naver';
+    window.location.href = 'http://lookthis.co.kr/oauth2/authorization/naver';
   };
 
   const props = {

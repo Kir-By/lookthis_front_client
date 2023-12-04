@@ -12,12 +12,12 @@ const JWTToken = userInfo?.params;
 
 const useAxios = axios.create({
   // baseURL: 'http://54.180.155.48:8080',
-  baseURL: 'http://localhost:9090/',
+  baseURL: 'https://lookthis.co.kr/',
   headers: {
     Accept: 'application/json; charset=UTF-8',
     Authorization: 'Bearer ' + JWTToken,
   },
-  withCredentials: false,
+  withCredentials: true,
 });
 
 export default useAxios;
