@@ -15,19 +15,24 @@ type insertPointAPIParamType = {
 
 export const getFlyerList = async (data: string) => {
   try {
-    // console.log('JSON.parse(data)', JSON.parse(data));
-    const responseData = await useAxios.get('/spot/getFlyerList', JSON.parse(data)).then(response => response.data);
-    // console.log('responseData', responseData);
+    const parsedData: FlyerListPropType = JSON.parse(data);
+    console.log('Parsed data:', parsedData);
+
+    const responseData = await useAxios.get('/spot/flyers', { params: parsedData }).then(response => response.data);
+    console.log('Response data:', responseData);
+
     return responseData;
   } catch (error) {
-    console.error(error);
+    console.error('Error:', error);
   }
 };
 
 export const getFlyerHistoryList = async (data: string) => {
   try {
     const responseData = await useAxios
-      .post('/spot/getFlyerHistoryList', JSON.parse(data))
+
+      .get('/spot/history/flyers', { params:  JSON.parse(data) })
+
       .then(response => response.data);
     // console.log('responseData', responseData);
     return responseData;
@@ -38,7 +43,7 @@ export const getFlyerHistoryList = async (data: string) => {
 
 export const insertPoint = async (data: insertPointAPIParamType) => {
   try {
-    const responseData = await useAxios.put('/spot/insertPoint', data).then(response => response.data);
+    const responseData = await useAxios.put('/spot/point', data).then(response => response.data);
     return responseData;
   } catch (error) {
     console.error(error);

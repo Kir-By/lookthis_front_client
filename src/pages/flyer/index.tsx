@@ -282,7 +282,7 @@ const Flyer = () => {
         {/* {flyerList?.map((flyer: FlyerType) => (
           <ImgWrapper
             key={flyer?.flyerId}
-            src={`https://lookthis.s3.ap-northeast-2.amazonaws.com/flyer/image${flyer?.path}`}
+            src={`https://lookthis2.s3.ap-northeast-2.amazonaws.com/flyer/image${flyer?.path}`}
           />
         ))} */}
         <SwiperImage

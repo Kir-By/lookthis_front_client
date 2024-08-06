@@ -12,7 +12,8 @@ const JWTToken = userInfo?.params;
 
 const useAxios = axios.create({
   // baseURL: 'http://54.180.155.48:8080',
-  baseURL: 'https://lookthis.co.kr/',
+  baseURL: 'https://lookthis.co.kr/api',
+  //baseURL: 'http://localhost/',
   headers: {
     Accept: 'application/json; charset=UTF-8',
     Authorization: 'Bearer ' + JWTToken,
