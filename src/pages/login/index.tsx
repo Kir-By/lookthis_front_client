@@ -114,6 +114,7 @@ const Login = () => {
   const onLoginNaver = () => {
     window.location.href = 'https://lookthis.co.kr/api/oauth2/authorization/naver';
     //window.location.href = 'http://localhost/api/oauth2/authorization/naver';
+
   };
 
   const props = {
