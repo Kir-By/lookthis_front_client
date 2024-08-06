@@ -36,7 +36,7 @@
   list-style: none;
   padding: 0;
   z-index: 1;
-  height: 637px;
+  height: 100vh;
 }
 
 @keyframes App-logo-spin {
