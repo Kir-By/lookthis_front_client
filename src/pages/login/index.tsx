@@ -1,13 +1,26 @@
+import {useState, Dispatch, SetStateAction} from 'react';
+import {Link} from 'react-router-dom';
 import styled, {css} from 'styled-components';
+import naverLogo from '../../naverLogo2.png';
+import lookthisLogo from '../../lookthisLogo3.png';
+import lookthisLogoLogin from '../../lookthisLogo.png';
+import LoginModal from './LoginModal';
 // import backImg from '../../test.png';
+
+type loginModalParamType = {
+  setOpenLoginModal: Dispatch<SetStateAction<boolean>>;
+};
 
 const Wrapper = styled.div`
   // background-color: #03C75A;
   // background-color: #8bd298;
   // background-color: #B6EDB6;
   // background-image: url(${''})
-  background: linear-gradient( 180deg, rgba(147,212,148,1) 0%, rgba(120,191,173,1) 100%);
+  // background: linear-gradient(150deg, #03c75a, white);
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
   min-width: 280px;
+  height: 837px;
+  max-height: 837px;
 `;
 const AlignCenter = css`
   display: flex;
@@ -18,14 +31,14 @@ const AlignCenter = css`
 const limitSize = css`
   max-width: 260px;
   min-width: 170px;
-`
+`;
 const Logo = styled.div`
   padding: 20px;
-  height: 300px;
+  height: 400px;
   ${AlignCenter}
 
   &:first-child > img {
-    width: 50%;
+    width: 100%;
     ${limitSize}
 }
   }
@@ -36,69 +49,101 @@ const LoginDiv = styled.div`
   height: 100px;
   ${AlignCenter}
   flex-direction:column;
+`;
 
-  &:last-child > input {
-    &:first-child {
-      border-radius: 6px 6px 0 0;
-    }
-    &:nth-child(2) {
-      border-radius: 0 0 6px 6px;
-    }
+const LoginNaver = styled.button`
+  background-color: #fff;
+  color: #03c75a;
+  width: 100%;
+  height: 50px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  letter-spacing: -0.14px;
+  position: relative;
+  border-color: #fff;
+  cursor: pointer;
+  ${limitSize}
+  ${AlignCenter}
+
+  & > div > img {
+    width: 45px;
+    height: 45px;
+    margin-left: -15px;
+  }
+
+  & > div > p {
+    font-size: 18px;
+    font-weight: 800;
+    margin-left: 15px;
   }
 `;
 
-const LoginInput = styled.input`
-  border: 1px solid #dadada;
-  box-shadow: none;
-  padding: 14px 17px 13px;
-  box-sizing: border-box;
-  width: 45%;
-  ${limitSize}
-`;
-
-const LoginNaver = styled.a`
-  width: 205px;
-  padding: 15px 0;
-  margin-top: 11px;
-  // color: #fff;
-  // background-color: #19ce60;
-  color: #03C75A;
+const NormalLogin = styled.button`
   background-color: #fff;
-  border: 1px solid #15c654;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-  width: 45%;
+  width: 85vw;
+  height: 50px;
+  padding: 12px 20px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  letter-spacing: -0.14px;
+  position: relative;
+  border-color: #fff;
+  cursor: pointer;
   ${limitSize}
+  ${AlignCenter}
+
+  & > div > img {
+    height: 65px;
+    margin-left: -15px;
+  }
+
+  & > div > p {
+    font-size: 18px;
+    font-weight: 800;
+    margin-right: 15px;
+    color: rgb(39, 214, 188);
+  }
 `;
 
 const Login = () => {
-  const {data: typeData} = {data: 'test'};
-  console.log(typeData);
+  // 로그인 모달 오픈 state
+  const [openLoginModal, setOpenLoginModal] = useState<boolean>(false);
+
+  // 로그인 링크 이동 함수
+  const onLoginNaver = () => {
+    window.location.href = 'https://lookthis.co.kr/api/oauth2/authorization/naver';
+    //window.location.href = 'http://localhost/api/oauth2/authorization/naver';
+  };
+
+  const props = {
+    setOpenLoginModal,
+  };
 
   return (
     <>
       <Wrapper>
         <Logo id="login_logo">
-          <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="" />
+          <img src={lookthisLogo} alt="" />
         </Logo>
         <LoginDiv id="loginSection">
-          <LoginInput alt="" placeholder="Input ID" />
-          <LoginInput alt="" placeholder="Input Password" />
+          {/* <LoginInput alt="" placeholder="Input ID" />
+          <LoginInput alt="" placeholder="Input Password" /> */}
           {/* <input alt="" type="color"/> */}
-          <LoginNaver
-            href="https://nid.naver.com/nidlogin.login?mode=form&amp;url=https%3A%2F%2Fwww.naver.com"
-            className="link_login"
-            data-clk="log_off.login"
-          >
-            <i className="ico_naver">
-              <span className="blind">네이버 </span>
-            </i>
-            로그인
+          <LoginNaver onClick={() => onLoginNaver()}>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <img src={naverLogo} />
+              <p style={{borderColor: '#03c75a'}}>네이버로 시작하기</p>
+            </div>
           </LoginNaver>
+          <NormalLogin onClick={() => setOpenLoginModal(true)}>
+            <div style={{width: 'inherit', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              <img src={lookthisLogoLogin} />
+              <p>회원 로그인</p>
+            </div>
+          </NormalLogin>
         </LoginDiv>
+        {openLoginModal && <LoginModal props={props} />}
       </Wrapper>
 
       {/* <div className="panel_inner" role="tabpanel" aria-controls="loinid">

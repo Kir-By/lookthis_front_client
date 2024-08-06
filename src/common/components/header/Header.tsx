@@ -1,20 +1,47 @@
 import {FC} from 'react';
 import styled from 'styled-components';
 import {Search} from 'react-feather';
+import {device} from '../../../common/style/layout/device';
+import {Link, useNavigate} from 'react-router-dom';
 
 const StyledHeader = styled.header`
   object-fit: contain;
-  height: 80px;
+  width: 100%;
+  height: 40px;
   margin-left: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid whitesmoke;
+  margin-left: -1px;
+  background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
+
+  @media ${device.mobile} {
+    max-width: 767px;
+    & img {
+      width: 100%;
+    }
+  }
+
+  @media ${device.tablet} {
+    max-width: 1366px;
+    & img {
+      width: 100%;
+    }
+  }
+
+  @media ${device.laptop} {
+    max-width: 1679px;
+    & img {
+      width: 100%;
+    }
+  }
 `;
 
 const StyledHeaderLeft = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
+  width: 767px;
 `;
 
 const StyledHeaderLeftImg = styled.img`
@@ -23,9 +50,29 @@ const StyledHeaderLeftImg = styled.img`
   margin-left: 5px;
 `;
 
-const StyledHeaderLeftSpan = styled.span`
-  padding: 10px;
+const HeaderButton = styled.button`
+  width: 50px;
+  height: 100%;
+  background: none;
+  border: none;
   cursor: pointer;
+  & > p {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+`;
+
+const StyledHeaderLeftSpan = styled.span`
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  & > button {
+    display: flex;
+    justify-content: center;
+  }
+  ${HeaderButton}
 `;
 
 const StyledHeaderMiddle = styled.div`
@@ -62,26 +109,43 @@ const StyledHeaderRightSpan = styled.span`
 `;
 
 const Header: FC = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledHeader>
       <StyledHeaderLeft>
-        <StyledHeaderLeftSpan>menu</StyledHeaderLeftSpan>
-        <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" />
+        <StyledHeaderLeftSpan>
+          <HeaderButton onClick={() => navigate('/flyer')}>
+            <p style={{color: window.location.pathname === '/flyer' ? 'black' : 'white'}}>LIST</p>
+          </HeaderButton>
+          {/* <Link to={'/flyer'}>List</Link> */}
+        </StyledHeaderLeftSpan>
+        <StyledHeaderLeftSpan>
+          <HeaderButton onClick={() => navigate('/flyer/history')}>
+            <p style={{color: window.location.pathname === '/flyer/history' ? 'black' : 'white'}}>HISTORY</p>
+          </HeaderButton>
+        </StyledHeaderLeftSpan>
+        <StyledHeaderLeftSpan>
+          <HeaderButton onClick={() => navigate('/myPage/pointInfo')}>
+            <p style={{color: window.location.pathname === '/myPage/pointInfo' ? 'black' : 'white'}}>POINT</p>
+          </HeaderButton>
+        </StyledHeaderLeftSpan>
+        {/* <StyledHeaderLeftImg src="https://i.pinimg.com/originals/ae/47/fa/ae47fa9a8fd263aa364018517020552d.png" /> */}
       </StyledHeaderLeft>
 
-      <StyledHeaderMiddle>
+      {/* <StyledHeaderMiddle>
         <StyledMaterialIcons>
           <Search></Search>
         </StyledMaterialIcons>
         <StyledHeaderMiddleInput type="text" placeholder="Search mail" />
         <StyledMaterialIcons className="material-icons"> arrow_drop_down </StyledMaterialIcons>
-      </StyledHeaderMiddle>
+      </StyledHeaderMiddle> */}
 
-      <StyledHeaderRight>
+      {/* <StyledHeaderRight>
         <StyledHeaderRightSpan> apps </StyledHeaderRightSpan>
         <StyledHeaderRightSpan> notifications </StyledHeaderRightSpan>
         <StyledHeaderRightSpan> account_circle </StyledHeaderRightSpan>
-      </StyledHeaderRight>
+      </StyledHeaderRight> */}
     </StyledHeader>
   );
 };
