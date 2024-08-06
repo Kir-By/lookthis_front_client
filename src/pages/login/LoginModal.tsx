@@ -120,6 +120,7 @@ const LoginModal = ({props: {setOpenLoginModal}}: PropsWithChildren<{props: Logi
   const axiosCreate = axios.create({
     baseURL: 'https://lookthis.co.kr/api',
     //baseURL: 'http://localhost/api',
+
     headers: {
       'Content-Type': 'multipart/form-data',
     },

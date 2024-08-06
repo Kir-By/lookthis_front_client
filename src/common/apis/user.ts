@@ -5,6 +5,7 @@ export const getUser = async (data: string) => {
     const responseData = await useAxios
         .get('/user', {params:JSON.parse(data)})
         .then(response => response.data);
+
     return responseData;
   } catch (error) {
     console.error(error);
@@ -14,6 +15,7 @@ export const getUser = async (data: string) => {
 export const getPointHistoryList = async (data: string) => {
   try {
     const responseData = await useAxios
+
       .get('user/history/points', {params:JSON.parse(data)})
       .then(response => response.data);
     // console.log('responseData', responseData);

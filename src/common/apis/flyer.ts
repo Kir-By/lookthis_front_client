@@ -30,7 +30,9 @@ export const getFlyerList = async (data: string) => {
 export const getFlyerHistoryList = async (data: string) => {
   try {
     const responseData = await useAxios
+
       .get('/spot/history/flyers', { params:  JSON.parse(data) })
+
       .then(response => response.data);
     // console.log('responseData', responseData);
     return responseData;
