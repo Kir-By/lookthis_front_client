@@ -5,15 +5,15 @@ import {device} from '../../../common/style/layout/device';
 import {Link, useNavigate} from 'react-router-dom';
 
 const StyledHeader = styled.header`
+  z-index: 9999;
+  position: fixed;
   object-fit: contain;
   width: 100%;
   height: 40px;
-  margin-left: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid whitesmoke;
-  margin-left: -1px;
   background: linear-gradient(180deg, rgba(147, 212, 148, 1) 0%, rgba(120, 191, 173, 1) 100%);
 
   @media ${device.mobile} {
